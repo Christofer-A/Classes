@@ -6,5 +6,5 @@ l4 = -k2;
 l5 = m2*dt^2 + k2 + k3 + mu2*m2*g*dt;
 l6 = m3*dt^2 + k3 + mu3*m3*g*dt;
 
-y*(l6*(l5*l1 - l4*l2) - l3*(l3*l1 - l4*l3))
+solve(@(t,y) y*(l6*(l5*l1 - l4*l2) - l3*(l3*l1 - l4*l3)),0,10)
 u*l4*l3
