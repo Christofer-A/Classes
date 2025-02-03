@@ -1,5 +1,6 @@
 % syms LE1 LE2 Ls F1 F2 phi theta thetax thetay thetaz
 % syms F1
+format short
 Ls = 0.3; LE2 = 0.3; LE1 = 0.25; phi = 45.0; theta = 45.0; thetay = 125.0; thetaz = 45.0; thetax = rad2deg(acos(sqrt(1-cos(deg2rad(thetay))^2-cos(deg2rad(thetaz))^2))); F2 = 125.0; F1 = 500;
 thetax
 rca = [-LE1 Ls*cos(deg2rad(30)) Ls*sin(deg2rad(30))]
@@ -12,6 +13,4 @@ M2 = cross(rda,Force1)
 
 Moment = M1 + M2
 M = sqrt(Moment(1)^2 + Moment(2)^2 + Moment(3)^2)
-format short
-vpa(M)
 
