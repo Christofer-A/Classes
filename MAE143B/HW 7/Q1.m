@@ -1,2 +1,2 @@
-sys = tf([1 2],[1 16 65 50 0])
-Bodepaper
+sys = tf([1 -1],[1 0 0])
+bode(sys)
