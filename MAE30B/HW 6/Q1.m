@@ -6,7 +6,7 @@ eqn2 = vDGf == R*wDf
 eqn3 = LBC*wBCf == PB*wABf
 eqn4 = R*wDf == PA*wABf
 eqn5 = vABGf == PABG*wABf
-eqn6 = vBCGf == 0.5*vBf*wABf
+eqn6 = vBCGf == 0.5*vBf
 eqn7 = vBf == LBC*wBCf
 
 G = solve([eqn1,eqn2,eqn3,eqn4,eqn5,eqn6,eqn7],[vDGf wDf vABGf wABf vBCGf wBCf vBf])
