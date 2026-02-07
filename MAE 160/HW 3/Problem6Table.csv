@@ -1,0 +1,14 @@
+Glass Type,Temperature (°C),Viscosity (Pa·s)
+High-lead glass,400,1.00E+14
+High-lead glass,600,"31,622,776.60"
+High-lead glass,800,"31,622.78"
+High-lead glass,1000,1000
+Soda-lime glass,600,1.00E+11
+Soda-lime glass,800,"3,162,277.66"
+Soda-lime glass,1000,"31,622.78"
+Soda-lime glass,1200,3162.27766
+Soda-lime glass,1400,501.1872336
+Soda-lime glass,1600,125.8925412
+Fused silica,1200,3.16E+12
+Fused silica,1400,"10,000,000,000"
+Fused silica,1600,"125,892,541.20"
