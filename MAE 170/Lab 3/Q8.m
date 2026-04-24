@@ -1,0 +1,14 @@
+clc; clear all; close all;
+plot([1900 1700 1400 1300], [1086 1262 1388 1294], 'o');
+hold on;
+plot([1900 1700 1400 1300], [2083 1667 1250 1250], 'x');
+title('Input Frequency vs Identified Frequency');
+xlabel('Input Frequency (Hz)');
+ylabel('Identified Frequency (Hz)');
+xline(1500,'--');
+x = 1500:3000;
+y = @(x) abs(x - 3000);
+plot(x,y(x), 'Color', [0.65 0.55 0.15]);
+x = 0:1500;
+plot(x,x, 'Color', [0.65 0.55 0.15]);
+legend('Arduino', 'Oscilloscope', 'Nyquist Frequency', 'Aliased Frequency');
