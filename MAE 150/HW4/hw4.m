@@ -63,6 +63,7 @@ theta5 = 216:2:246;
 theta6 = 246:2:340;
 theta7 = 340:2:360;
 
+% figure();
 % hold on;
 % plot(theta1, dwell1*ones(1, size(theta1,2)), 'Color', 'b');
 % plot(theta2, 30 + cycloid1(deg2rad(theta2 - 18), deg2rad(72 - 18), 15 - 30), 'Color', 'b');
@@ -71,7 +72,7 @@ theta7 = 340:2:360;
 % plot(theta5, dwell3*ones(1, size(theta5,2)), 'Color', 'b');
 % plot(theta6, poly1(deg2rad(theta6 - 246), deg2rad(340 - 246), 30 - 0), 'Color', 'b');
 % plot(theta7, dwell4*ones(1, size(theta7,2)), 'Color', 'b');
-
+% 
 % xlim([0 360]);
 % ylim([-1 35]);
 % xlabel('Theta (Degrees)');
@@ -112,7 +113,7 @@ theta7 = 340:2:360;
 
 thetaall = 0:2:360;
 
-rprime = 20;
+rprime = 30;
 rfollower = 6;
 
 xr = @(theta, r) r*cos(theta);
@@ -126,8 +127,8 @@ yr = @(theta, r) r*sin(theta);
 % plot(xr(deg2rad(thetaall), rprime - rfollower), yr(deg2rad(thetaall), rprime - rfollower), 'LineStyle', ':');
 
 % Pitch Curve
-xpitch = @(y, theta) (y + 20).*sin(theta);
-ypitch = @(y, theta) (y + 20).*cos(theta);
+xpitch = @(y, theta) (y + rprime).*sin(theta);
+ypitch = @(y, theta) (y + rprime).*cos(theta);
 
 x1c = xpitch(dwell1*ones(1, size(theta1,2)), deg2rad(theta1));
 y1c = ypitch(dwell1*ones(1, size(theta1,2)), deg2rad(theta1));
@@ -148,7 +149,7 @@ y7c = ypitch(dwell4*ones(1, size(theta7,2)), deg2rad(theta7));
 
 % Contour Curve
 
-phi = @(y, dydtheta) atan(dydtheta./(y + 20));
+phi = @(y, dydtheta) atan(dydtheta./(y + rprime));
 
 xcontour = @(xpitch, theta, phi) xpitch - rfollower.*sin(theta - phi);
 ycontour = @(ypitch, theta, phi) ypitch - rfollower.*cos(theta - phi);
@@ -194,22 +195,139 @@ linearDisplacement = readmatrix('Linear Displacement.csv', 'NumHeaderLines', 3);
 tLinearDisplacement = linearDisplacement(:,2);
 yLinearDisplacement = linearDisplacement(:,3);
 newlinearDisplacement = readmatrix('New Linear Displacement.csv', 'NumHeaderLines', 3);
-newtLinearDisplacement = newlinearDisplacement(:,2);
-newyLinearDisplacement = newlinearDisplacement(:,3);
+newtLinearDisplacement = newlinearDisplacement(:,1);
+newyLinearDisplacement = newlinearDisplacement(:,2);
 linearVelocity = readmatrix('Linear Velocity.csv', 'NumHeaderLines', 3);
 tLinearVelocity = linearVelocity(:,2);
 yLinearVelocity = linearVelocity(:,3);
 newlinearVelocity = readmatrix('New Linear Velocity.csv', 'NumHeaderLines', 3);
-newtLinearVelocity = newlinearVelocity(:,2);
-newyLinearVelocity = newlinearVelocity(:,3);
+newtLinearVelocity = newlinearVelocity(:,1);
+newyLinearVelocity = newlinearVelocity(:,2);
 linearAcceleration = readmatrix('Linear Acceleration.csv', 'NumHeaderLines', 3);
 tLinearAcceleration = linearAcceleration(:,2);
 yLinearAcceleration = linearAcceleration(:,3);
 newlinearAcceleration = readmatrix('New Linear Acceleration.csv', 'NumHeaderLines', 3);
-newtLinearAcceleration = newlinearAcceleration(:,2);
-newyLinearAcceleration = newlinearAcceleration(:,3);
+newtLinearAcceleration = newlinearAcceleration(:,1);
+newyLinearAcceleration = newlinearAcceleration(:,2);
 
 figure();
-tiledlayout(3,2);
-nexttile;
+tiledlayout(3,1);
 
+nexttile;
+plot(tLinearDisplacement, yLinearDisplacement);
+hold on;
+plot(newtLinearDisplacement, newyLinearDisplacement);
+xlabel('Time (s)');
+ylabel('Linear Displacement (mm)');
+title('Linear Displacement vs Time Comparison');
+legend({'Old Cam', 'New Cam'});
+
+nexttile;
+plot(tLinearVelocity, yLinearVelocity);
+hold on;
+plot(newtLinearVelocity, newyLinearVelocity);
+xlabel('Time (s)');
+ylabel('Linear Velocity (mm/s)');
+title('Linear Velocity vs Time Comparison');
+legend({'Old Cam', 'New Cam'});
+
+nexttile;
+plot(tLinearAcceleration, yLinearAcceleration);
+hold on;
+plot(newtLinearAcceleration, newyLinearAcceleration);
+xlabel('Time (s)');
+ylabel('Linear Acceleration (mm/s^2)');
+title('Linear Acceleration vs Time Comparison');
+legend({'Old Cam', 'New Cam'});
+
+p1c = 'See Figure 1';
+
+% Problem 4
+
+% (a) Find the individual stiffness matrix for element 1
+
+kf = @(l,beta) 210*10^9*pi*(0.025)^2/l.*[cosd(beta)^2 cosd(beta)*sind(beta) -cosd(beta)^2 -cosd(beta)*sind(beta); cosd(beta)*sind(beta) sind(beta)^2 -cosd(beta)*sind(beta) -sind(beta)^2; -cosd(beta)^2 -cosd(beta)*sind(beta) cosd(beta)^2 cosd(beta)*sind(beta); -cosd(beta)*sind(beta) -sind(beta)^2 cosd(beta)*sind(beta) sind(beta)^2];
+
+k1 = kf(sqrt(2), 45);
+p4a = k1;
+
+% (b) Find the individual stiffness matrix for element 2
+
+k2 = kf(1, 0);
+p4b = k2;
+
+% (c) Find the individual stiffness matrix for element 3
+
+k3 = kf(1, 90);
+p4c = k3;
+
+% (d) Find the global stiffness matrix
+
+k = zeros(6,6);
+k([1 2 3 4], [1 2 3 4]) = k([1 2 3 4], [1 2 3 4]) + k1;
+k([5 6 3 4], [5 6 3 4]) = k([5 6 3 4], [5 6 3 4]) + k2;
+k([5 6 1 2], [5 6 1 2]) = k([5 6 1 2], [5 6 1 2]) + k3;
+
+p4d = k;
+
+% (e) Calculate the displacement vector at node 1
+
+P = 65*10^3;
+
+usolve = [P*cosd(45) -P*sind(45) 0]/k([1 2 5], [1 2 5]);
+
+p4e = [usolve(1) usolve(2)];
+
+% (f) Calculate the displacement vector at node 2
+
+p4f = [0 0];
+
+% (g) Calculate the displacement vector at node 3
+
+p4g = [usolve(3) 0];
+
+% (h) Calculate the force vector at node 1
+
+F = k*[usolve(1) usolve(2) 0 0 usolve(3) 0]';
+
+p4h = [F(1) F(2)];
+
+% (i) Calculate the force vector at node 2
+
+p4i = [F(3) F(4)];
+
+% (j) Calculate the force vector at node 3
+
+p4j = [F(5) F(6)];
+
+% (k) Create scaled truss figure
+
+figure();
+hold on;
+axis equal;
+
+node1 = [0 -1];
+node2 = [1 0];
+node3 = [0 0];
+
+plot([node1(1) node2(1)], [node1(2) node2(2)], 'Color', 'black', 'LineWidth', 1.5);
+plot([node1(1) node3(1)], [node1(2) node3(2)], 'Color', 'black', 'LineWidth', 1.5);
+plot([node3(1) node2(1)], [node3(2) node2(2)], 'Color', 'black', 'LineWidth', 1.5);
+
+newnode1 = [0 -1] + 500*p4e;
+newnode2 = [1 0] + 500*p4f;
+newnode3 = [0 0] + 500*p4g;
+
+plot([newnode1(1) newnode2(1)], [newnode1(2) newnode2(2)], 'Color', 'red', 'LineWidth', 1.5, 'LineStyle', '--');
+plot([newnode1(1) newnode3(1)], [newnode1(2) newnode3(2)], 'Color', 'red', 'LineWidth', 1.5, 'LineStyle', '--');
+plot([newnode3(1) newnode2(1)], [newnode3(2) newnode2(2)], 'Color', 'red', 'LineWidth', 1.5, 'LineStyle', '--');
+
+blackPlot = plot(NaN, NaN, 'Color', 'black');
+redPlot = plot(NaN, NaN, 'Color', 'red');
+
+legend([blackPlot redPlot], {'Original Truss', 'Deformed Truss'});
+xlabel('Length (m)');
+ylabel('Height (m)');
+title('Original Truss vs Deformed Truss');
+
+p4k = 'See figure 2';
