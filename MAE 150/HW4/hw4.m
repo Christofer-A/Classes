@@ -2,7 +2,7 @@ clear all; close all; clc; format long;
 
 name = 'Christofer Azadian';
 id = 'A17889763';
-hw_num = 3;
+hw_num = 4;
 
 % Problem 1
 
@@ -213,6 +213,17 @@ newyLinearAcceleration = newlinearAcceleration(:,2);
 figure();
 tiledlayout(3,1);
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+% Problem 4
+
+% (a) Determine local stiffness for element 1
+
+
+
+=======
+>>>>>>> Stashed changes
 nexttile;
 plot(tLinearDisplacement, yLinearDisplacement);
 hold on;
@@ -330,4 +341,9 @@ xlabel('Length (m)');
 ylabel('Height (m)');
 title('Original Truss vs Deformed Truss');
 
+<<<<<<< Updated upstream
 p4k = 'See figure 2';
+=======
+p4k = 'See figure 2';
+>>>>>>> ab53e8ea8e2c60b8ce2d311a8800a93613512a71
+>>>>>>> Stashed changes
