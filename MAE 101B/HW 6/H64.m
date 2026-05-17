@@ -33,7 +33,7 @@ ylabel('Power Required (kW)');
 legend({'Aerodynamic Drag', 'Rolling Resistance', 'Total Power Required'});
 
 energyConsumption = @(P, U) P./U;
-range = @(P, e) P./e;
+range = @(Cap, e) Cap./e;
 
 mph1 = 30*0.44704;
 mph2 = 60*0.44704;
@@ -53,22 +53,35 @@ hP1 = hPd1 + hPr1;
 hP2 = hPd2 + hPr2;
 hP3 = hPd3 + hPr3;
 
-Hyundai.powerDrag(1) = hPd1;
-Hyundai.powerDrag(2) = hPd2;
-Hyundai.powerDrag(3) = hPd3;
+Hyundai.powerDrag_kW(1) = hPd1;
+Hyundai.powerDrag_kW(2) = hPd2;
+Hyundai.powerDrag_kW(3) = hPd3;
 
-Hyundai.powerRollingResistance(1) = hPr1;
-Hyundai.powerRollingResistance(2) = hPr2;
-Hyundai.powerRollingResistance(3) = hPr3;
+Hyundai.powerRollingResistance_kW(1) = hPr1;
+Hyundai.powerRollingResistance_kW(2) = hPr2;
+Hyundai.powerRollingResistance_kW(3) = hPr3;
 
-Hyundai.totalPower(1) = hP1;
-Hyundai.totalPower(2) = hP2;
-Hyundai.totalPower(3) = hP3;
+Hyundai.totalPower_kW(1) = hP1;
+Hyundai.totalPower_kW(2) = hP2;
+Hyundai.totalPower_kW(3) = hP3;
 
-Hyundai.energyConsumption(1) = energyConsumption(hP1, mph1);
-Hyundai.energyConsumption(2) = energyConsumption(hP2, mph2);
-Hyundai.energyConsumption(3) = energyConsumption(hP3, mph3);
+Hyundai.energyConsumption_kWh_mi(1) = energyConsumption(hP1, 30);
+Hyundai.energyConsumption_kWh_mi(2) = energyConsumption(hP2, 60);
+Hyundai.energyConsumption_kWh_mi(3) = energyConsumption(hP3, 80);
 
-Hyundai.range(1) = range(hP1, Hyundai.energyConsumption(1));
-Hyundai.range(2) = range(hP2, Hyundai.energyConsumption(2));
-Hyundai.range(3) = range(hP3, Hyundai.energyConsumption(3));
+Hyundai.range_mi(1) = range(77.4, Hyundai.energyConsumption_kWh_mi(1));
+Hyundai.range_mi(2) = range(77.4, Hyundai.energyConsumption_kWh_mi(2));
+Hyundai.range_mi(3) = range(77.4, Hyundai.energyConsumption_kWh_mi(3));
+
+Hyundai.powerDrag_kW = Hyundai.powerDrag_kW';
+Hyundai.powerRollingResistance_kW = Hyundai.powerRollingResistance_kW';
+Hyundai.totalPower_kW = Hyundai.totalPower_kW';
+Hyundai.energyConsumption_kWh_mi = Hyundai.energyConsumption_kWh_mi';
+Hyundai.range_mi = Hyundai.range_mi';
+
+hTable = struct2table(Hyundai);
+hTable.Properties.RowNames = {'30 mph', '60 mph', '80 mph'};
+
+disp('Hyundai Performance Data')
+disp(hTable)
+
