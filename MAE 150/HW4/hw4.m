@@ -213,17 +213,6 @@ newyLinearAcceleration = newlinearAcceleration(:,2);
 figure();
 tiledlayout(3,1);
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-% Problem 4
-
-% (a) Determine local stiffness for element 1
-
-
-
-=======
->>>>>>> Stashed changes
 nexttile;
 plot(tLinearDisplacement, yLinearDisplacement);
 hold on;
@@ -264,7 +253,7 @@ p4a = k1;
 
 % (b) Find the individual stiffness matrix for element 2
 
-k2 = kf(1, 0);
+k2 = kf(1, 180);
 p4b = k2;
 
 % (c) Find the individual stiffness matrix for element 3
@@ -276,8 +265,8 @@ p4c = k3;
 
 k = zeros(6,6);
 k([1 2 3 4], [1 2 3 4]) = k([1 2 3 4], [1 2 3 4]) + k1;
-k([5 6 3 4], [5 6 3 4]) = k([5 6 3 4], [5 6 3 4]) + k2;
-k([5 6 1 2], [5 6 1 2]) = k([5 6 1 2], [5 6 1 2]) + k3;
+k([3 4 5 6], [3 4 5 6]) = k([3 4 5 6], [3 4 5 6]) + k2;
+k([1 2 5 6], [1 2 5 6]) = k([1 2 5 6], [1 2 5 6]) + k3;
 
 p4d = k;
 
@@ -340,10 +329,3 @@ legend([blackPlot redPlot], {'Original Truss', 'Deformed Truss'});
 xlabel('Length (m)');
 ylabel('Height (m)');
 title('Original Truss vs Deformed Truss');
-
-<<<<<<< Updated upstream
-p4k = 'See figure 2';
-=======
-p4k = 'See figure 2';
->>>>>>> ab53e8ea8e2c60b8ce2d311a8800a93613512a71
->>>>>>> Stashed changes

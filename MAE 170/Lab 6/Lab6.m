@@ -22,7 +22,7 @@ clc; close all;
 %     plot(sigx(:,31-i), 'Color', 'blue');
 % end
 
-speakerPosition = [32 8];
+speakerPosition = [33 8];
 
 distance = (speakerPosition(1) - (1:30))/100;
 refi1 = ones(30,1).*101;
@@ -46,6 +46,6 @@ plot(distance, distance./343, 'LineWidth', 2);
 
 plot(distance, polyval(p, distance), 'LineWidth', 2, 'LineStyle', '--', 'Color', 'black');
 
-legend({'Experimental Data Error', 'Speed of Sound', 'Line of Best Fit'});
+legend({'Experimental Time Delay', 'Theoretical Time Delay', 'Line of Best Fit'});
 
-1/p(1)
+speedOfSound = 1/p(1);
